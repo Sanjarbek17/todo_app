@@ -9,9 +9,7 @@ class ListProvider extends ChangeNotifier {
   // final String uri = 'http://localhost:3000';
   final String uri = dotenv.env['API_URL'] ?? 'http://localhost:3000';
 
-  final List<Map> _list = [
-    {'title': 'asdf', 'description': 'description', 'status': false}
-  ];
+  final List<Map> _list = [];
 
   List<Map> get list => _list;
 
@@ -24,8 +22,6 @@ class ListProvider extends ChangeNotifier {
       body: jsonEncode(data),
       headers: {'Content-Type': 'application/json'},
     );
-    print(response.body);
-    print(data);
     notifyListeners();
   }
 
@@ -34,7 +30,6 @@ class ListProvider extends ChangeNotifier {
     final response = await http.get(Uri.parse('$uri/api/tasks/'));
     if (response.statusCode == 200) {
       _list.clear();
-      print(response.body);
       Map<String, dynamic> data = jsonDecode(response.body);
       for (var item in data['result']!) {
         _list.add(item);
@@ -42,13 +37,28 @@ class ListProvider extends ChangeNotifier {
     }
   }
 
-  void removeFromList(int id) {
+  void removeFromList(int id) async {
     _list.removeWhere((element) => element['id'] == id);
+    //request to api
+    print(id);
+    final response = http.post(
+      Uri.parse('$uri/api/tasks/$id/delete'),
+      headers: {'Content-Type': 'application/json'},
+    );
+    // print(response.body);
     notifyListeners();
   }
 
-  void clearList() {
-    _list.clear();
+  void updateStatus(int id, {bool? status = false}) async {
+    Map data = _list.firstWhere((element) => element['id'] == id);
+    data['status'] = status;
+    //request to api
+    final response = http.post(
+      Uri.parse('$uri/api/tasks/$id/update'),
+      body: jsonEncode(data),
+      headers: {'Content-Type': 'application/json'},
+    );
+    // print(response.body);
     notifyListeners();
   }
 }

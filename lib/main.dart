@@ -33,14 +33,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     // get list provider
     final listProvider = Provider.of<ListProvider>(context);
-    // get data from api
-    listProvider.getData();
     return FutureBuilder(
         future: listProvider.getData(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             home: Scaffold(
@@ -58,8 +53,8 @@ class _MyAppState extends State<MyApp> {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.clear),
-                    onPressed: () => listProvider.clearList(),
+                    icon: const Icon(Icons.refresh),
+                    onPressed: () => setState(() {}),
                   ),
                 ],
               ),
@@ -77,11 +72,18 @@ class _MyAppState extends State<MyApp> {
                         //   side: const BorderSide(width: 2, color: Colors.amberAccent),
                         //   borderRadius: BorderRadius.circular(10),
                         // ),
-                        title: Text(listProvider.list[index]['name']),
+                        leading: Checkbox(
+                          value: listProvider.list[index]['status'],
+                          onChanged: (value) => listProvider.updateStatus(listProvider.list[index]['id'], status: !listProvider.list[index]['status']),
+                        ),
+                        title: Text(
+                          listProvider.list[index]['name'],
+                          style: TextStyle(decoration: listProvider.list[index]['status'] ? TextDecoration.lineThrough : TextDecoration.none),
+                        ),
                         subtitle: Text(listProvider.list[index]['description']),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete),
-                          onPressed: () => listProvider.removeFromList(index),
+                          onPressed: () => listProvider.removeFromList(listProvider.list[index]['id']),
                         ),
                       ),
                     ),
