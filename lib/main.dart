@@ -7,7 +7,7 @@ import 'screens/add_screen.dart';
 
 void main() async {
   // load .env file
-  await dotenv.load(fileName: '.env');
+  await dotenv.load(fileName: 'assets/env');
   runApp(
     MultiProvider(
         providers: [
