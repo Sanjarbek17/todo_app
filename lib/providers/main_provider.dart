@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ListProvider extends ChangeNotifier {
-  final List<Map> _list = [];
+  final List<Map> _list = [
+    {'title': 'asdf', 'description': 'description', 'status': false}
+  ];
 
   List<Map> get list => _list;
 

@@ -47,8 +47,6 @@ class _AddPageState extends State<AddPage> {
                 // get list provider
                 final listProvider = Provider.of<ListProvider>(context, listen: false);
                 // add to list
-                print(_descriptionController.text);
-                print(_titleController.text);
                 listProvider.addToList(
                   _titleController.text,
                   _descriptionController.text,

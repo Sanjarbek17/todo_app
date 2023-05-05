@@ -10,10 +10,10 @@ void main() {
         providers: [
           ChangeNotifierProvider(create: (_) => ListProvider()),
         ],
-        child: MaterialApp(
+        child: const MaterialApp(
           title: 'Todo List',
           debugShowCheckedModeBanner: false,
-          home: const MyApp(),
+          home: MyApp(),
         )),
   );
 }
@@ -34,6 +34,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: const Text('Todo List'),
           actions: [
             IconButton(
@@ -51,16 +52,31 @@ class _MyAppState extends State<MyApp> {
             ),
           ],
         ),
-        body: ListView.builder(
-          itemBuilder: (context, index) => ListTile(
-            title: Text(listProvider.list[index]['title']),
-            subtitle: Text(listProvider.list[index]['description']),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: () => listProvider.removeFromList(index),
+        body: Center(
+          child: Container(
+            margin: const EdgeInsets.all(10),
+            width: 600,
+            child: ListView.builder(
+              // separatorBuilder: (context, index) => const Divider(),
+              itemBuilder: (context, index) => Container(
+                decoration: const BoxDecoration(border: Border(top: BorderSide(), bottom: BorderSide())),
+                child: ListTile(
+                  // give style to list tile
+                  // shape: RoundedRectangleBorder(
+                  //   side: const BorderSide(width: 2, color: Colors.amberAccent),
+                  //   borderRadius: BorderRadius.circular(10),
+                  // ),
+                  title: Text(listProvider.list[index]['title']),
+                  subtitle: Text(listProvider.list[index]['description']),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () => listProvider.removeFromList(index),
+                  ),
+                ),
+              ),
+              itemCount: listProvider.list.length,
             ),
           ),
-          itemCount: listProvider.list.length,
         ),
       ),
     );
