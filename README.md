@@ -5,6 +5,7 @@ A new Flutter project.
 ## Description
 
 This is a simple todo app that allows you to add, edit and delete tasks. It also allows you to mark tasks as complete or incomplete. The app uses a local database to store the tasks. The app also uses the provider package to manage state.
+I have used REST API to fetch data from the server. The app uses the http package to make the API calls.
 
 ## Screenshots
 
