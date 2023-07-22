@@ -17,7 +17,7 @@ class ListProvider extends ChangeNotifier {
     Map data = {'name': name, 'description': description, 'status': status};
     _list.add(data);
     //request to api
-    final response = await http.post(
+    await http.post(
       Uri.parse('$uri/api/create-task/'),
       body: jsonEncode(data),
       headers: {'Content-Type': 'application/json'},
@@ -41,10 +41,11 @@ class ListProvider extends ChangeNotifier {
     _list.removeWhere((element) => element['id'] == id);
     //request to api
     print(id);
-    final response = http.post(
+    http.post(
       Uri.parse('$uri/api/tasks/$id/delete'),
       headers: {'Content-Type': 'application/json'},
     );
+    print(uri);
     // print(response.body);
     notifyListeners();
   }
@@ -53,7 +54,7 @@ class ListProvider extends ChangeNotifier {
     Map data = _list.firstWhere((element) => element['id'] == id);
     data['status'] = status;
     //request to api
-    final response = http.post(
+    http.post(
       Uri.parse('$uri/api/tasks/$id/update'),
       body: jsonEncode(data),
       headers: {'Content-Type': 'application/json'},

@@ -2,6 +2,14 @@
 
 A new Flutter project.
 
+## Description
+
+This is a simple todo app that allows you to add, edit and delete tasks. It also allows you to mark tasks as complete or incomplete. The app uses a local database to store the tasks. The app also uses the provider package to manage state.
+
+## Screenshots
+
+<img src='flutter_01.png' width=600 heigth=400>
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
